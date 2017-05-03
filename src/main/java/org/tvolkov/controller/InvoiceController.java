@@ -37,6 +37,6 @@ public class InvoiceController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String generateInvoice(){
-        return invoiceService.generateInvoice(new Invoice());
+        return invoiceService.generateInvoice(new Invoice(invoiceType, invoiceTypeLocalized, invoiceDate, paymentDueDate, invoiceNumber, startDate, endDate, periodDescription, amount, vatAmount));
     }
 }
