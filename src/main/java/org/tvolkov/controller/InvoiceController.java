@@ -15,28 +15,32 @@ public class InvoiceController {
     @Autowired
     private InvoiceService invoiceService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String getInvoicesPerMonth(@RequestParam("customerId") long customerId, @RequestParam("month") int month){
+    @RequestMapping(method = RequestMethod.GET, params = "customerId, month")
+    public String getInvoicesPerMonth(@RequestParam("customerId") long customerId,
+                                      @RequestParam("month") int month){
         return invoiceService.getInvoicesPerMonth(customerId, month, "all");
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String getShopInvoicesPerMonth(@RequestParam("customerId") long customerId, @RequestParam("filter") String filter, @RequestParam("month") int month){
+    @RequestMapping(method = RequestMethod.GET, params = "customerId, filter, month")
+    public String getShopInvoicesPerMonth(@RequestParam("customerId") long customerId,
+                                          @RequestParam("filter") String filter,
+                                          @RequestParam("month") int month){
         return invoiceService.getInvoicesPerMonth(customerId, month, filter);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String getInvoicesHistoryPerAddress(@RequestParam("customerId") long customerId, @RequestParam("addressId") String addressId){
-        return invoiceService.getInvoicesHistoryPerAddress(customerId, addressId);
+    @RequestMapping(method = RequestMethod.GET, params = "customerId, addressId")
+    public String getInvoicesHistoryPerAddress(@RequestParam("customerId") long customerId,
+                                               @RequestParam("addressId") String addressId){
+        return invoiceService.getInvoicesPerAddress(customerId, addressId);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, params = "customerId")
     public String getFullInvoicesHistory(@RequestParam("customerId") long customerId){
         return invoiceService.getFullInvoicesHistory(customerId);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public String generateInvoice(){
-        return invoiceService.generateInvoice(new Invoice(invoiceType, invoiceTypeLocalized, invoiceDate, paymentDueDate, invoiceNumber, startDate, endDate, periodDescription, amount, vatAmount));
+        return invoiceService.generateInvoice(new Invoice(Invoice.InvoiceType.advancePayment, 20.99));
     }
 }

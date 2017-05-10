@@ -1,21 +1,48 @@
 package org.tvolkov.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Customer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private List<String> addresses;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private Set<Address> addresses;
+
+    private String name;
 
     protected Customer(){}
 
-    public Customer(List<String> addresses){
+    public Customer(String name){
+        this.name = name;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public Set<Address> getAddresses() {
+        return addresses;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", addresses=" + addresses +
+                '}';
+    }
+
+    public void setAddresses(Set<Address> addresses) {
         this.addresses = addresses;
     }
 }
