@@ -3,7 +3,6 @@ package org.tvolkov.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "address")
 public class Address {
 
     @Id
