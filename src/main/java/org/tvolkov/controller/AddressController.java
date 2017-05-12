@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.tvolkov.repository.AddressRepository;
 
-import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 public class AddressController {
@@ -15,6 +17,6 @@ public class AddressController {
 
     @GetMapping("/api/v1.0/addresses")
     public String getAllAddresses(){
-        return Arrays.toString(addressRepository.findAll().toArray());
+        return addressRepository.findAll().stream().map(Object::toString).collect(Collectors.joining(","));
     }
 }

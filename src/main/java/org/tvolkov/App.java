@@ -27,23 +27,23 @@ public class App {
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
-            Customer ivan = new Customer("ivan");
-            Set<Address> addresses1 = new HashSet<Address>(){{
-                add(new Address("Moscow, Red square", ivan));
-                add(new Address("London, Downing str", ivan));
-                add(new Address("North Pole", ivan));
-            }};
-            ivan.setAddresses(addresses1);
-
-            Customer john = new Customer("john");
-            Set<Address> addresses2 = new HashSet<Address>(){{
-               add(new Address("Los Angeles", john));
-               add(new Address("Miami", john));
-            }};
-            john.setAddresses(addresses2);
-
-            customerRepository.save(ivan);
-            customerRepository.save(john);
+//            Customer ivan = new Customer("ivan");
+//            Set<Address> addresses1 = new HashSet<Address>(){{
+//                add(new Address("Moscow, Red square", ivan));
+//                add(new Address("London, Downing str", ivan));
+//                add(new Address("North Pole", ivan));
+//            }};
+//            ivan.setAddresses(addresses1);
+//
+//            Customer john = new Customer("john");
+//            Set<Address> addresses2 = new HashSet<Address>(){{
+//               add(new Address("Los Angeles", john));
+//               add(new Address("Miami", john));
+//            }};
+//            john.setAddresses(addresses2);
+//
+//            customerRepository.save(ivan);
+//            customerRepository.save(john);
         };
     }
 }
