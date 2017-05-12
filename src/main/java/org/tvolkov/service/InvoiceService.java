@@ -11,16 +11,16 @@ public class InvoiceService {
     @Autowired
     private InvoiceRepository invoiceRepository;
 
-    public String getInvoicesPerMonth(long customerId, int month, String filter){
-        return invoiceRepository.findOne(1l).toString();
+    public String getInvoicesPerMonth(int customerId, int month, String filter){
+        return invoiceRepository.findOne(customerId).toString();
     }
 
-    public String getInvoicesPerAddress(long customerId, String addressId){
-        return invoiceRepository.findOne(1l).toString();
+    public String getInvoicesPerAddress(int customerId, String addressId){
+        return invoiceRepository.findOne(customerId).toString();
     }
 
-    public String getFullInvoicesHistory(long customerId){
-        return invoiceRepository.findOne(1l).toString();
+    public String getFullInvoicesHistory(int customerId){
+        return invoiceRepository.findOne(customerId).toString();
     }
 
     public String generateInvoice(Invoice invoice){

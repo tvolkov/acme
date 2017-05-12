@@ -1,15 +1,22 @@
 package org.tvolkov.model;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 public class Invoice {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String invoiceId;
+    private int id;
+
+    @Enumerated(EnumType.ORDINAL)
     private InvoiceType invoiceType;
+
     private double amount;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     protected Invoice(){}
 
@@ -21,10 +28,19 @@ public class Invoice {
     @Override
     public String toString() {
         return "Invoice{" +
-                "invoiceId='" + invoiceId + '\'' +
+                "invoiceId='" + id + '\'' +
                 ", invoiceType=" + invoiceType +
                 ", amount=" + amount +
+                ", address=" + address.getId() +
                 '}';
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public enum InvoiceType {

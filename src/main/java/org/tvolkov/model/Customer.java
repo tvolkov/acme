@@ -9,7 +9,7 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private int id;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Address> addresses;

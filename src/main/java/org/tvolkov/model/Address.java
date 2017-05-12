@@ -5,15 +5,22 @@ import javax.persistence.*;
 @Entity
 public class Address {
 
+    public int getId() {
+        return id;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
     private String address;
+
+    @OneToOne(mappedBy = "address")
+    private Invoice invoice;
 
     protected Address(){}
 
@@ -37,5 +44,13 @@ public class Address {
                 ", customer=" + customer.getId() +
                 ", address='" + address + '\'' +
                 '}';
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 }
