@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.tvolkov.model.Invoice;
 import org.tvolkov.repository.InvoiceRepository;
 
+import java.util.Arrays;
+
 @Service
 public class InvoiceService {
 
@@ -20,7 +22,7 @@ public class InvoiceService {
     }
 
     public String getFullInvoicesHistory(int customerId){
-        return invoiceRepository.findOne(customerId).toString();
+        return Arrays.toString(invoiceRepository.findByCustomerId(customerId).toArray());
     }
 
     public String generateInvoice(Invoice invoice){

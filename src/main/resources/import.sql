@@ -10,3 +10,7 @@ insert into address(id, customer_id, address) values (5, 2, 'Miami');
 insert into invoice(id, invoice_type, amount, address_id) values (1, 0, 20.99, 1);
 insert into invoice(id, invoice_type, amount, address_id) values (2, 0, 14.95, 2);
 insert into invoice(id, invoice_type, amount, address_id) values (3, 1, 99.90, 3);
+-- insert into invoice(id, invoice_type, amount, address_id) values (4, 1, 99.90, 4);
+-- insert into invoice(id, invoice_type, amount, address_id) values (5, 1, 99.90, 4);
+insert into invoice(id, invoice_type, amount, address_id) values (6, 0, 99.90, 5);
+insert into invoice(id, invoice_type, amount, address_id) values (7, 0, 99.90, 5);
