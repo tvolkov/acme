@@ -1,11 +1,14 @@
 package org.tvolkov.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.tvolkov.model.Address;
 import org.tvolkov.repository.AddressRepository;
 
-import java.util.Arrays;
+import java.util.List;
 
 @RestController
 public class AddressController {
@@ -14,7 +17,7 @@ public class AddressController {
     private AddressRepository addressRepository;
 
     @GetMapping("/api/v1.0/addresses")
-    public String getAllAddresses(){
-        return Arrays.toString(addressRepository.findAll().toArray());
+    public ResponseEntity<List<Address>> getAllAddresses(){
+        return new ResponseEntity<>(addressRepository.findAll(), HttpStatus.OK);
     }
 }

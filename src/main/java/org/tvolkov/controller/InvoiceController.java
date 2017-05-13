@@ -1,9 +1,13 @@
 package org.tvolkov.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.tvolkov.model.Invoice;
 import org.tvolkov.service.InvoiceService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1.0/invoices")
@@ -13,31 +17,31 @@ public class InvoiceController {
     private InvoiceService invoiceService;
 
     @GetMapping(params = {"customerId", "month"})
-    public String getAllInvoicesPerMonth(@RequestParam("customerId") int customerId,
-                                      @RequestParam("month") int month){
-        return invoiceService.getInvoicesPerMonth(customerId, month, null);
+    public ResponseEntity<List<Invoice>> getAllInvoicesPerMonth(@RequestParam("customerId") int customerId,
+                                                                @RequestParam("month") int month){
+        return new ResponseEntity<>(invoiceService.getInvoicesPerMonth(customerId, month, null), HttpStatus.OK);
     }
 
     @GetMapping(params = {"customerId", "filter", "month"})
-    public String getShopInvoicesPerMonth(@RequestParam("customerId") int customerId,
+    public ResponseEntity<List<Invoice>> getShopInvoicesPerMonth(@RequestParam("customerId") int customerId,
                                           @RequestParam("month") int month,
                                           @RequestParam("filter") String filter){
-        return invoiceService.getInvoicesPerMonth(customerId, month, filter);
+        return new ResponseEntity<>(invoiceService.getInvoicesPerMonth(customerId, month, filter), HttpStatus.OK);
     }
 
     @GetMapping(params = {"customerId", "addressId"})
-    public String getInvoicesHistoryPerAddress(@RequestParam("customerId") int customerId,
+    public ResponseEntity<List<Invoice>> getInvoicesHistoryPerAddress(@RequestParam("customerId") int customerId,
                                                @RequestParam("addressId") int addressId){
-        return invoiceService.getInvoicesPerAddress(customerId, addressId);
+        return new ResponseEntity<>(invoiceService.getInvoicesPerAddress(customerId, addressId), HttpStatus.OK);
     }
 
     @GetMapping(params = "customerId")
-    public String getFullInvoicesHistory(@RequestParam("customerId") int customerId){
-        return invoiceService.getFullInvoicesHistory(customerId);
+    public ResponseEntity<List<Invoice>> getFullInvoicesHistory(@RequestParam("customerId") int customerId){
+        return new ResponseEntity<>(invoiceService.getFullInvoicesHistory(customerId), HttpStatus.OK);
     }
 
-    @PostMapping
-    public String generateInvoice(){
-        return invoiceService.generateInvoice(new Invoice(0, 20.99));
+    @PostMapping(params = {"customerId", "addressId", "invoiceType", "month", "amount"})
+    public ResponseEntity<Invoice> generateInvoice(){
+        return new ResponseEntity<>(invoiceService.generateInvoice(new Invoice(0, 20.99)), HttpStatus.OK);
     }
 }

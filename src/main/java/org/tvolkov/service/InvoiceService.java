@@ -8,6 +8,7 @@ import org.tvolkov.repository.InvoiceRepository;
 
 import java.time.Month;
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class InvoiceService {
@@ -15,23 +16,27 @@ public class InvoiceService {
     @Autowired
     private InvoiceRepository invoiceRepository;
 
-    public String getInvoicesPerMonth(int customerId, int month, String type){
-        int realMonth = Month.of(month).ordinal() + 1; // +1 needed because Month's ordinals are zero-based and we are useing one-based months notation
+    public List<Invoice> getInvoicesPerMonth(int customerId, int month, String type){
+        int oneBasedMonth = getOneBasedMonth(month);
         if (type == null){
-            return invoiceRepository.findByCustomerIdAndMonth(customerId, realMonth).toString();
+            return invoiceRepository.findByCustomerIdAndMonth(customerId, oneBasedMonth);
         }
-        return invoiceRepository.findByCustomerIdMonthAndType(customerId, realMonth, InvoiceType.valueOf(type).ordinal()).toString();
+        return invoiceRepository.findByCustomerIdMonthAndType(customerId, oneBasedMonth, InvoiceType.valueOf(type).ordinal());
     }
 
-    public String getInvoicesPerAddress(int customerId, int addressId){
-        return invoiceRepository.findByCustomerIdAndAddressId(customerId, addressId).toString();
+    public List<Invoice> getInvoicesPerAddress(int customerId, int addressId){
+        return invoiceRepository.findByCustomerIdAndAddressId(customerId, addressId);
     }
 
-    public String getFullInvoicesHistory(int customerId){
-        return Arrays.toString(invoiceRepository.findByCustomerId(customerId).toArray());
+    public List<Invoice> getFullInvoicesHistory(int customerId){
+        return invoiceRepository.findByCustomerId(customerId);
     }
 
-    public String generateInvoice(Invoice invoice){
-        return invoiceRepository.save(invoice).toString();
+    public Invoice generateInvoice(Invoice invoice){
+        return invoiceRepository.save(invoice);
+    }
+
+    private int getOneBasedMonth(int zeroBasedMonth){
+        return Month.of(zeroBasedMonth).ordinal() + 1; // +1 needed because Month's ordinals are zero-based but we are using one-based months notation
     }
 }
