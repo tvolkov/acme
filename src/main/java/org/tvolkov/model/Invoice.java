@@ -1,6 +1,7 @@
 package org.tvolkov.model;
 
 import javax.persistence.*;
+import java.time.Month;
 
 @Entity
 public class Invoice {
@@ -17,6 +18,9 @@ public class Invoice {
     @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
+
+    @Enumerated(EnumType.ORDINAL)
+    private Month month;
 
     protected Invoice(){}
 
@@ -42,5 +46,13 @@ public class Invoice {
                 ", amount=" + amount +
                 ", address=" + address.getId() +
                 '}';
+    }
+
+    public Month getMonth() {
+        return month;
+    }
+
+    public void setMonth(Month month) {
+        this.month = month;
     }
 }

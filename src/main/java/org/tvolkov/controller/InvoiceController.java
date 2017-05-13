@@ -14,15 +14,15 @@ public class InvoiceController {
     private InvoiceService invoiceService;
 
     @GetMapping(params = {"customerId", "month"})
-    public String getInvoicesPerMonth(@RequestParam("customerId") int customerId,
+    public String getAllInvoicesPerMonth(@RequestParam("customerId") int customerId,
                                       @RequestParam("month") int month){
         return invoiceService.getInvoicesPerMonth(customerId, month, "all");
     }
 
     @GetMapping(params = {"customerId", "filter", "month"})
     public String getShopInvoicesPerMonth(@RequestParam("customerId") int customerId,
-                                          @RequestParam("filter") String filter,
-                                          @RequestParam("month") int month){
+                                          @RequestParam("month") int month,
+                                          @RequestParam("filter") String filter){
         return invoiceService.getInvoicesPerMonth(customerId, month, filter);
     }
 
