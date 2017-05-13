@@ -23,12 +23,12 @@ public class InvoiceService {
         this.addressRepository = addressRepository;
     }
 
-    public List<Invoice> getInvoicesPerMonth(int customerId, int month, String type){
-        int oneBasedMonth = getOneBasedMonth(month);
+    public List<Invoice> getInvoicesPerMonth(int customerId, int month, String type) throws InvalidMonthException {
+        int realMonth = getOneBasedMonth(month);
         if (type == null){
-            return invoiceRepository.findByCustomerIdAndMonth(customerId, oneBasedMonth);
+            return invoiceRepository.findByCustomerIdAndMonth(customerId, realMonth);
         }
-        return invoiceRepository.findByCustomerIdMonthAndType(customerId, oneBasedMonth, InvoiceType.valueOf(type).ordinal());
+        return invoiceRepository.findByCustomerIdMonthAndType(customerId, realMonth, InvoiceType.valueOf(type).ordinal());
     }
 
     public List<Invoice> getInvoicesPerAddress(int customerId, int addressId){
@@ -48,7 +48,10 @@ public class InvoiceService {
         return invoiceRepository.save(new Invoice(invoice.getInvoiceType(), invoice.getAmount(), address, invoice.getMonth()));
     }
 
-    private int getOneBasedMonth(int zeroBasedMonth){
-        return Month.of(zeroBasedMonth).ordinal() + 1; // +1 needed because Month's ordinals are zero-based but we are using one-based months notation
+    private int getOneBasedMonth(int month) throws InvalidMonthException {
+        if (month < 1 || month > 12){
+            throw new InvalidMonthException("month is out of range");
+        }
+        return Month.of(month).ordinal() + 1; // +1 needed because Month's ordinals are zero-based but we are using one-based months notation
     }
 }

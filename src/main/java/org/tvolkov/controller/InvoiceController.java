@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.tvolkov.model.Invoice;
 import org.tvolkov.service.InvalidAddressIdException;
+import org.tvolkov.service.InvalidMonthException;
 import org.tvolkov.service.InvoiceService;
 
 import java.util.List;
@@ -20,14 +21,23 @@ public class InvoiceController {
     @GetMapping(params = {"customerId", "month"})
     public ResponseEntity<List<Invoice>> getAllInvoicesPerMonth(@RequestParam("customerId") int customerId,
                                                                 @RequestParam("month") int month){
-        return new ResponseEntity<>(invoiceService.getInvoicesPerMonth(customerId, month, null), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(invoiceService.getInvoicesPerMonth(customerId, month, null), HttpStatus.OK);
+        } catch (InvalidMonthException e) {
+            return new ResponseEntity<>((List<Invoice>) null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping(params = {"customerId", "filter", "month"})
     public ResponseEntity<List<Invoice>> getShopInvoicesPerMonth(@RequestParam("customerId") int customerId,
                                           @RequestParam("month") int month,
                                           @RequestParam("filter") String filter){
-        return new ResponseEntity<>(invoiceService.getInvoicesPerMonth(customerId, month, filter), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(invoiceService.getInvoicesPerMonth(customerId, month, filter), HttpStatus.OK);
+        } catch (InvalidMonthException e) {
+            return new ResponseEntity<>((List<Invoice>) null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @GetMapping(params = {"customerId", "addressId"})
