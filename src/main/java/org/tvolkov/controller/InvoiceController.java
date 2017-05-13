@@ -37,7 +37,6 @@ public class InvoiceController {
         } catch (InvalidMonthException e) {
             return new ResponseEntity<>((List<Invoice>) null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     @GetMapping(params = {"customerId", "addressId"})
@@ -58,6 +57,5 @@ public class InvoiceController {
         } catch (InvalidAddressIdException e) {
             return new ResponseEntity<>((Invoice) null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 }
