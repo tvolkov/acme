@@ -13,4 +13,9 @@ insert into invoice(id, invoice_type, amount, address_id, month) values (33, 1, 
 insert into invoice(id, invoice_type, amount, address_id, month) values (34, 1, 99.90, 14, 4);
 insert into invoice(id, invoice_type, amount, address_id, month) values (35, 1, 99.90, 14, 5);
 insert into invoice(id, invoice_type, amount, address_id, month) values (36, 0, 99.90, 15, 6);
-insert into invoice(id, invoice_type, amount, address_id, month) values (37, 0, 99.90, 15, 6);
+insert into invoice(id, invoice_type, amount, address_id, month) values (37, 1, 99.90, 15, 6);
+insert into invoice(id, invoice_type, amount, address_id, month) values (38, 1, 99.90, 15, 7);
+insert into invoice(id, invoice_type, amount, address_id, month) values (39, 0, 99.90, 15, 7);
+insert into invoice(id, invoice_type, amount, address_id, month) values (310, 1, 99.90, 15, 7);
+insert into invoice(id, invoice_type, amount, address_id, month) values (311, 0, 99.90, 15, 7);
+insert into invoice(id, invoice_type, amount, address_id, month) values (312, 1, 99.90, 15, 7);

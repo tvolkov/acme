@@ -15,7 +15,7 @@ public class InvoiceController {
     @GetMapping(params = {"customerId", "month"})
     public String getAllInvoicesPerMonth(@RequestParam("customerId") int customerId,
                                       @RequestParam("month") int month){
-        return invoiceService.getInvoicesPerMonth(customerId, month, "all");
+        return invoiceService.getInvoicesPerMonth(customerId, month, null);
     }
 
     @GetMapping(params = {"customerId", "filter", "month"})

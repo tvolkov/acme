@@ -18,4 +18,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
 
     @Query("select i from Invoice i where i.address.customer.id = ?1 and i.month = ?2 and i.invoiceType = ?3")
     List<Invoice> findByCustomerIdMonthAndType(int customerId, int month, int type);
+
+    @Query("select i from Invoice i where i.address.customer.id = ?1 and i.month = ?2")
+    List<Invoice> findByCustomerIdAndMonth(int customerId, int realMonth);
 }

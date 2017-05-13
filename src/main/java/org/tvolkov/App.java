@@ -11,6 +11,9 @@ public class App {
         SpringApplication.run(App.class, args);
     }
 
+    /**
+     * H2 console for debugging purposes
+     */
     @Bean
     public ServletRegistrationBean h2servletRegistration() {
         ServletRegistrationBean registration = new ServletRegistrationBean(new  org.h2.server.web.WebServlet ());
