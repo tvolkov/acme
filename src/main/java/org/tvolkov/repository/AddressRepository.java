@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import org.tvolkov.model.Address;
 
 @Repository
-public interface AddressRepository extends JpaRepository<Address, Long> {
+public interface AddressRepository extends JpaRepository<Address, Integer> {
 }

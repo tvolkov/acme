@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import org.tvolkov.model.Customer;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 }

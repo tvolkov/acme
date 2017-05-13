@@ -1,13 +1,11 @@
 package org.tvolkov.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Customer {
 
     @Id
@@ -32,7 +30,7 @@ public class Customer {
     public Set<Address> getAddresses() {
         return addresses;
     }
-
+    @JsonValue
     public String getName() {
         return name;
     }

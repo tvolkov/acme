@@ -1,13 +1,11 @@
 package org.tvolkov.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Address {
 
     @Id
@@ -21,9 +19,14 @@ public class Address {
     private String address;
 
     @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Invoice> invoice;
 
     protected Address(){}
+
+    public Address(int id){
+        this.id = id;
+    }
 
     public Address(String address, Customer customer){
         this.address = address;

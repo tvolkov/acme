@@ -10,6 +10,9 @@ import org.tvolkov.repository.AddressRepository;
 
 import java.util.List;
 
+/**
+ * This controller was addede for debugging purposes
+ */
 @RestController
 public class AddressController {
 

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.tvolkov.model.Invoice;
+import org.tvolkov.service.InvalidAddressIdException;
 import org.tvolkov.service.InvoiceService;
 
 import java.util.List;
@@ -40,8 +41,13 @@ public class InvoiceController {
         return new ResponseEntity<>(invoiceService.getFullInvoicesHistory(customerId), HttpStatus.OK);
     }
 
-    @PostMapping(params = {"customerId", "addressId", "invoiceType", "month", "amount"})
-    public ResponseEntity<Invoice> generateInvoice(){
-        return new ResponseEntity<>(invoiceService.generateInvoice(new Invoice(0, 20.99)), HttpStatus.OK);
+    @PostMapping
+    public ResponseEntity<Invoice> generateInvoice(@RequestBody Invoice invoice){
+        try {
+            return new ResponseEntity<>(invoiceService.generateInvoice(invoice), HttpStatus.OK);
+        } catch (InvalidAddressIdException e) {
+            return new ResponseEntity<>((Invoice) null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 }

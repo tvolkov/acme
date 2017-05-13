@@ -2,8 +2,10 @@ package org.tvolkov.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tvolkov.model.Address;
 import org.tvolkov.model.Invoice;
 import org.tvolkov.model.InvoiceType;
+import org.tvolkov.repository.AddressRepository;
 import org.tvolkov.repository.InvoiceRepository;
 
 import java.time.Month;
@@ -13,10 +15,12 @@ import java.util.List;
 public class InvoiceService {
 
     private InvoiceRepository invoiceRepository;
+    private AddressRepository addressRepository;
 
     @Autowired
-    public InvoiceService(InvoiceRepository invoiceRepository){
+    public InvoiceService(InvoiceRepository invoiceRepository, AddressRepository addressRepository){
         this.invoiceRepository = invoiceRepository;
+        this.addressRepository = addressRepository;
     }
 
     public List<Invoice> getInvoicesPerMonth(int customerId, int month, String type){
@@ -35,8 +39,13 @@ public class InvoiceService {
         return invoiceRepository.findByCustomerId(customerId);
     }
 
-    public Invoice generateInvoice(Invoice invoice){
-        return invoiceRepository.save(invoice);
+    public Invoice generateInvoice(Invoice invoice) throws InvalidAddressIdException {
+        int addressId = invoice.getAddress().getId();
+        Address address = addressRepository.findOne(addressId);
+        if (address == null){
+            throw new InvalidAddressIdException("No Address with id " + addressId + " exists");
+        }
+        return invoiceRepository.save(new Invoice(invoice.getInvoiceType(), invoice.getAmount(), address, invoice.getMonth()));
     }
 
     private int getOneBasedMonth(int zeroBasedMonth){
