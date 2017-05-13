@@ -26,7 +26,6 @@ public class Invoice {
         this.amount = amount;
     }
 
-
     public Address getAddress() {
         return address;
     }
@@ -34,7 +33,6 @@ public class Invoice {
     public void setAddress(Address address) {
         this.address = address;
     }
-
 
     @Override
     public String toString() {

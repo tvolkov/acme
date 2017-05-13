@@ -7,14 +7,17 @@ import org.tvolkov.model.InvoiceType;
 import org.tvolkov.repository.InvoiceRepository;
 
 import java.time.Month;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class InvoiceService {
 
-    @Autowired
     private InvoiceRepository invoiceRepository;
+
+    @Autowired
+    public InvoiceService(InvoiceRepository invoiceRepository){
+        this.invoiceRepository = invoiceRepository;
+    }
 
     public List<Invoice> getInvoicesPerMonth(int customerId, int month, String type){
         int oneBasedMonth = getOneBasedMonth(month);
