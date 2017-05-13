@@ -1,16 +1,16 @@
-insert into customer(id, name) values (1, 'ivan');
-insert into customer(id, name) values (2, 'john');
+insert into customer(id, name) values (21, 'ivan');
+insert into customer(id, name) values (22, 'john');
 
-insert into address(id, customer_id, address) values (1, 1, 'Moscow, Red square');
-insert into address(id, customer_id, address) values (2, 1, 'London, Downing str');
-insert into address(id, customer_id, address) values (3, 1, 'North Pole');
-insert into address(id, customer_id, address) values (4, 2, 'Los Angeles');
-insert into address(id, customer_id, address) values (5, 2, 'Miami');
+insert into address(id, customer_id, address) values (11, 21, 'Moscow, Red square');
+insert into address(id, customer_id, address) values (12, 21, 'London, Downing str');
+insert into address(id, customer_id, address) values (13, 21, 'North Pole');
+insert into address(id, customer_id, address) values (14, 22, 'Los Angeles');
+insert into address(id, customer_id, address) values (15, 22, 'Miami');
 
-insert into invoice(id, invoice_type, amount, address_id) values (1, 0, 20.99, 1);
-insert into invoice(id, invoice_type, amount, address_id) values (2, 0, 14.95, 2);
-insert into invoice(id, invoice_type, amount, address_id) values (3, 1, 99.90, 3);
--- insert into invoice(id, invoice_type, amount, address_id) values (4, 1, 99.90, 4);
--- insert into invoice(id, invoice_type, amount, address_id) values (5, 1, 99.90, 4);
-insert into invoice(id, invoice_type, amount, address_id) values (6, 0, 99.90, 5);
-insert into invoice(id, invoice_type, amount, address_id) values (7, 0, 99.90, 5);
+insert into invoice(id, invoice_type, amount, address_id) values (31, 0, 20.99, 11);
+insert into invoice(id, invoice_type, amount, address_id) values (32, 0, 14.95, 12);
+insert into invoice(id, invoice_type, amount, address_id) values (33, 1, 99.90, 13);
+insert into invoice(id, invoice_type, amount, address_id) values (34, 1, 99.90, 14);
+insert into invoice(id, invoice_type, amount, address_id) values (35, 1, 99.90, 14);
+insert into invoice(id, invoice_type, amount, address_id) values (36, 0, 99.90, 15);
+insert into invoice(id, invoice_type, amount, address_id) values (37, 0, 99.90, 15);
