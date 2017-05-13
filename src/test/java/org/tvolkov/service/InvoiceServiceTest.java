@@ -15,6 +15,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -110,7 +111,7 @@ public class InvoiceServiceTest {
         Address address = new Address(1);
         Invoice invoice = new Invoice(0, 1.0, address, 1);
         when(addressRepository.findOne(1)).thenReturn(address);
-        when(invoiceRepository.save(invoice)).thenReturn(invoice);
+        when(invoiceRepository.save(eq(invoice))).thenReturn(invoice);
 
         //when
         Invoice savedInvoice = invoiceService.generateInvoice(invoice);

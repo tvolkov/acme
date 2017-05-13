@@ -80,4 +80,18 @@ public class Invoice {
     public void setAmount(double amount) {
         this.amount = amount;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Invoice)) return false;
+
+        Invoice invoice = (Invoice) o;
+
+        if (id != invoice.id) return false;
+        if (invoiceType != invoice.invoiceType) return false;
+        if (Double.compare(invoice.amount, amount) != 0) return false;
+        if (month != invoice.month) return false;
+        return address.equals(invoice.address);
+    }
 }
