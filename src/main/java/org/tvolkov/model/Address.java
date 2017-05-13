@@ -1,6 +1,9 @@
 package org.tvolkov.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -14,6 +17,8 @@ public class Address {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Customer customer;
 
     private String address;
@@ -51,6 +56,14 @@ public class Address {
 
     public void setInvoice(Set<Invoice> invoice) {
         this.invoice = invoice;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override

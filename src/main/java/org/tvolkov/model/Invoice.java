@@ -43,6 +43,7 @@ public class Invoice {
     public void setAddress(int addressId){
         this.address = new Address(addressId);
     }
+
     public void setAddress(Address address) {
         this.address = address;
     }
