@@ -2,6 +2,7 @@ package org.tvolkov.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.tvolkov.model.InvoiceType;
 import org.tvolkov.service.InvoiceService;
 import org.tvolkov.model.Invoice;
 
@@ -38,6 +39,6 @@ public class InvoiceController {
 
     @PostMapping
     public String generateInvoice(){
-        return invoiceService.generateInvoice(new Invoice(Invoice.InvoiceType.advancePayment, 20.99));
+        return invoiceService.generateInvoice(new Invoice(InvoiceType.advancePayment, 20.99));
     }
 }

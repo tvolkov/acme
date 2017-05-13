@@ -25,16 +25,6 @@ public class Invoice {
         this.amount = amount;
     }
 
-    @Override
-    public String toString() {
-        return "Invoice{" +
-                "invoiceId='" + id + '\'' +
-                ", invoiceType=" + invoiceType +
-                ", amount=" + amount +
-                ", address=" + address.getId() +
-                '}';
-    }
-
     public Address getAddress() {
         return address;
     }
@@ -43,7 +33,14 @@ public class Invoice {
         this.address = address;
     }
 
-    public enum InvoiceType {
-        advancePayment, shopPurchase
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "invoiceId='" + id + '\'' +
+                ", invoiceType=" + invoiceType +
+                ", amount=" + amount +
+                ", address=" + address.getId() +
+                '}';
     }
 }

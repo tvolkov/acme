@@ -6,10 +6,6 @@ import java.util.Set;
 @Entity
 public class Address {
 
-    public int getId() {
-        return id;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -30,12 +26,24 @@ public class Address {
         this.customer = customer;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public Customer getCustomer() {
         return customer;
     }
 
     public String getAddress() {
         return address;
+    }
+
+    public Set<Invoice> getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Set<Invoice> invoice) {
+        this.invoice = invoice;
     }
 
     @Override
@@ -45,13 +53,5 @@ public class Address {
                 ", customer=" + customer.getId() +
                 ", address='" + address + '\'' +
                 '}';
-    }
-
-    public Set<Invoice> getInvoice() {
-        return invoice;
-    }
-
-    public void setInvoice(Set<Invoice> invoice) {
-        this.invoice = invoice;
     }
 }
