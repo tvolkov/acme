@@ -16,7 +16,8 @@ public class InvoiceService {
     private InvoiceRepository invoiceRepository;
 
     public String getInvoicesPerMonth(int customerId, int month, String type){
-        return invoiceRepository.findByCustomerIdMonthAndType(customerId, Month.of(month), InvoiceType.valueOf(type)).toString();
+        return invoiceRepository.findByCustomerIdMonthAndType(customerId, Month.of(month).ordinal() + 1, // +1 needed because Month's ordinals are zero-based and we are useing one-based months notation
+                InvoiceType.valueOf(type).ordinal()).toString();
     }
 
     public String getInvoicesPerAddress(int customerId, int addressId){

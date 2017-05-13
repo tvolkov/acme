@@ -1,7 +1,6 @@
 package org.tvolkov.model;
 
 import javax.persistence.*;
-import java.time.Month;
 
 @Entity
 public class Invoice {
@@ -10,8 +9,7 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Enumerated(EnumType.ORDINAL)
-    private InvoiceType invoiceType;
+    private int invoiceType;
 
     private double amount;
 
@@ -19,15 +17,15 @@ public class Invoice {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @Enumerated(EnumType.ORDINAL)
-    private Month month;
+    private int month;
 
     protected Invoice(){}
 
-    public Invoice(InvoiceType invoiceType, double amount){
+    public Invoice(int invoiceType, double amount){
         this.invoiceType = invoiceType;
         this.amount = amount;
     }
+
 
     public Address getAddress() {
         return address;
@@ -48,11 +46,11 @@ public class Invoice {
                 '}';
     }
 
-    public Month getMonth() {
+    public int getMonth() {
         return month;
     }
 
-    public void setMonth(Month month) {
+    public void setMonth(int month) {
         this.month = month;
     }
 }
