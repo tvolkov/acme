@@ -14,7 +14,7 @@ public class Invoice {
 
     private double amount;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
 

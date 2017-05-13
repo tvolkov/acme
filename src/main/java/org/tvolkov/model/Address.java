@@ -1,6 +1,7 @@
 package org.tvolkov.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Address {
@@ -19,8 +20,8 @@ public class Address {
 
     private String address;
 
-    @OneToOne(mappedBy = "address")
-    private Invoice invoice;
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
+    private Set<Invoice> invoice;
 
     protected Address(){}
 
@@ -46,11 +47,11 @@ public class Address {
                 '}';
     }
 
-    public Invoice getInvoice() {
+    public Set<Invoice> getInvoice() {
         return invoice;
     }
 
-    public void setInvoice(Invoice invoice) {
+    public void setInvoice(Set<Invoice> invoice) {
         this.invoice = invoice;
     }
 }
