@@ -17,8 +17,8 @@ public class InvoiceService {
         return invoiceRepository.findOne(customerId).toString();
     }
 
-    public String getInvoicesPerAddress(int customerId, String addressId){
-        return invoiceRepository.findOne(customerId).toString();
+    public String getInvoicesPerAddress(int customerId, int addressId){
+        return invoiceRepository.findByCustomerIdAndAddressId(customerId, addressId).toString();
     }
 
     public String getFullInvoicesHistory(int customerId){

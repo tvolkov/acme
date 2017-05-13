@@ -12,22 +12,22 @@ public class InvoiceController {
     @Autowired
     private InvoiceService invoiceService;
 
-    @GetMapping(params = "customerId, month")
+    @GetMapping(params = {"customerId", "month"})
     public String getInvoicesPerMonth(@RequestParam("customerId") int customerId,
                                       @RequestParam("month") int month){
         return invoiceService.getInvoicesPerMonth(customerId, month, "all");
     }
 
-    @GetMapping(params = "customerId, filter, month")
+    @GetMapping(params = {"customerId", "filter", "month"})
     public String getShopInvoicesPerMonth(@RequestParam("customerId") int customerId,
                                           @RequestParam("filter") String filter,
                                           @RequestParam("month") int month){
         return invoiceService.getInvoicesPerMonth(customerId, month, filter);
     }
 
-    @GetMapping( params = "customerId, addressId")
+    @GetMapping(params = {"customerId", "addressId"})
     public String getInvoicesHistoryPerAddress(@RequestParam("customerId") int customerId,
-                                               @RequestParam("addressId") String addressId){
+                                               @RequestParam("addressId") int addressId){
         return invoiceService.getInvoicesPerAddress(customerId, addressId);
     }
 
