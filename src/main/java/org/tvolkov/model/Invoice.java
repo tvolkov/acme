@@ -8,11 +8,12 @@ public class Invoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
 
-    private int invoiceType;
+    @Convert(converter = InvoiceTypeConverter.class)
+    private InvoiceType invoiceType;
 
-    private double amount;
+    private Double amount;
 
     @ManyToOne
     @JoinColumn(name = "address_id")
@@ -28,7 +29,7 @@ public class Invoice {
         this.id = id;
     }
 
-    public Invoice(int invoiceType, double amount, Address address, int month){
+    public Invoice(InvoiceType invoiceType, double amount, Address address, int month){
         this.invoiceType = invoiceType;
         this.amount = amount;
         this.address = address;
@@ -63,7 +64,7 @@ public class Invoice {
     }
 
     public int getId(){
-        return this.id;
+        return this.id == null ? 0 : this.id;
     }
 
     public int getMonth() {
@@ -74,11 +75,11 @@ public class Invoice {
         this.month = month;
     }
 
-    public int getInvoiceType() {
+    public InvoiceType getInvoiceType() {
         return invoiceType;
     }
 
-    public void setInvoiceType(int invoiceType) {
+    public void setInvoiceType(InvoiceType invoiceType) {
         this.invoiceType = invoiceType;
     }
 

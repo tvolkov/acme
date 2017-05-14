@@ -35,7 +35,7 @@ public class InvoiceControllerTest {
     private static final String MONTH_PARAM = "month";
     private static final String FILTER_PARAM = "filter";
     private static final String ADDRESS_ID_PARAM = "addressId";
-    private static final String INVOICE_JSON = "{\"id\":0,\"invoiceType\":0,\"amount\":1.0,\"month\":1,\"address\":123}";
+    private static final String INVOICE_JSON = "{\"id\":0,\"invoiceType\":\"advancePayment\",\"amount\":1.0,\"month\":1,\"address\":123}";
     private static final String INVOICE_JSON_ARRAY = "[" + INVOICE_JSON + "]";
 
     @Autowired
@@ -47,7 +47,7 @@ public class InvoiceControllerTest {
     @Test
     public void shouldReturnInvoicePerMonth() throws Exception {
         given(invoiceService.getInvoicesPerMonth(1, 1, InvoiceService.NO_FILTER))
-                .willReturn(new ArrayList<Invoice>(){{add(new Invoice(0, 1.0, new Address(123), 1));}});
+                .willReturn(new ArrayList<Invoice>(){{add(new Invoice(InvoiceType.advancePayment, 1.0, new Address(123), 1));}});
 
         mvc.perform(MockMvcRequestBuilders.get(API_PATH)
                 .accept(MediaType.APPLICATION_JSON)
@@ -71,7 +71,7 @@ public class InvoiceControllerTest {
     @Test
     public void shouldReturnShopInvoicePerMonth() throws Exception {
         given(invoiceService.getInvoicesPerMonth(1, 1, InvoiceType.shopPurchase.toString()))
-                .willReturn(new ArrayList<Invoice>(){{add(new Invoice(0, 1.0, new Address(123), 1));}});
+                .willReturn(new ArrayList<Invoice>(){{add(new Invoice(InvoiceType.advancePayment, 1.0, new Address(123), 1));}});
 
         mvc.perform(MockMvcRequestBuilders.get(API_PATH)
                 .accept(MediaType.APPLICATION_JSON)
@@ -97,7 +97,7 @@ public class InvoiceControllerTest {
     @Test
     public void shouldReturnInvoiceHistoryPerAddress() throws Exception {
         given(invoiceService.getInvoicesPerAddress(1, 123))
-                .willReturn(new ArrayList<Invoice>(){{add(new Invoice(0, 1.0, new Address(123), 1));}});
+                .willReturn(new ArrayList<Invoice>(){{add(new Invoice(InvoiceType.advancePayment, 1.0, new Address(123), 1));}});
 
         mvc.perform(MockMvcRequestBuilders.get(API_PATH)
                 .accept(MediaType.APPLICATION_JSON)
@@ -110,7 +110,7 @@ public class InvoiceControllerTest {
     @Test
     public void shouldReturnFullInvoicesHistory() throws Exception {
         given(invoiceService.getFullInvoicesHistory(21))
-                .willReturn(new ArrayList<Invoice>(){{add(new Invoice(0, 1.0, new Address(123), 1));}});
+                .willReturn(new ArrayList<Invoice>(){{add(new Invoice(InvoiceType.advancePayment, 1.0, new Address(123), 1));}});
 
         mvc.perform(MockMvcRequestBuilders.get(API_PATH)
                 .accept(MediaType.APPLICATION_JSON)
@@ -121,7 +121,7 @@ public class InvoiceControllerTest {
 
     @Test
     public void shouldGenerateInvoice() throws Exception {
-        Invoice invoice = new Invoice(0, 1.0, new Address(123), 1);
+        Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, new Address(123), 1);
         given(invoiceService.generateInvoice(anyObject())).willReturn(invoice); //TODO anyObject is a workaround, need to replace it with the appropriate mather
 
         mvc.perform(MockMvcRequestBuilders.post(API_PATH)
@@ -134,7 +134,7 @@ public class InvoiceControllerTest {
 
     @Test
     public void shouldReturnErrorIfAdressIsInvalidWhenGeneratingInvoice() throws Exception {
-        Invoice invoice = new Invoice(0, 1.0, new Address(123), 1);
+        Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, new Address(123), 1);
         given(invoiceService.generateInvoice(anyObject())).willThrow(InvalidAddressIdException.class);//TODO anyObject is a workaround, need to replace it with the appropriate mather
 
         mvc.perform(MockMvcRequestBuilders.post(API_PATH)

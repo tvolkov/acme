@@ -30,7 +30,7 @@ public class InvoiceService {
         if (NO_FILTER.equals(type)){
             return invoiceRepository.findByCustomerIdAndMonth(customerId, realMonth);
         }
-        return invoiceRepository.findByCustomerIdMonthAndType(customerId, realMonth, InvoiceType.valueOf(type).ordinal());
+        return invoiceRepository.findByCustomerIdMonthAndType(customerId, realMonth, InvoiceType.valueOf(type));
     }
 
     public List<Invoice> getInvoicesPerAddress(int customerId, int addressId){

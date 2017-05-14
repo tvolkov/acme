@@ -11,7 +11,7 @@ import org.tvolkov.repository.AddressRepository;
 import java.util.List;
 
 /**
- * This controller was addede for debugging purposes
+ * This controller was added for debugging purposes
  */
 @RestController
 public class AddressController {

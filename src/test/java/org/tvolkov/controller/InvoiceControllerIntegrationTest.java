@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.tvolkov.model.Invoice;
+import org.tvolkov.model.InvoiceType;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -39,7 +40,7 @@ public class InvoiceControllerIntegrationTest {
         assertEquals(1, result.size());
         Invoice invoice = result.get(0);
         assertEquals(31, invoice.getId());
-        assertEquals(0, invoice.getInvoiceType());
+        assertEquals(InvoiceType.advancePayment, invoice.getInvoiceType());
         assertEquals(20.99, invoice.getAmount(), 0);
         assertEquals(1, invoice.getMonth());
         assertEquals(11, invoice.getAddress().getId());
@@ -55,7 +56,7 @@ public class InvoiceControllerIntegrationTest {
         assertEquals(1, result.size());
         Invoice invoice = result.get(0);
         assertEquals(33, invoice.getId());
-        assertEquals(1, invoice.getInvoiceType());
+        assertEquals(InvoiceType.shopPurchase, invoice.getInvoiceType());
         assertEquals(99.9, invoice.getAmount(), 0);
         assertEquals(3, invoice.getMonth());
         assertEquals(13, invoice.getAddress().getId());
@@ -71,7 +72,7 @@ public class InvoiceControllerIntegrationTest {
         assertEquals(7, result.size());
         Invoice invoice = result.get(0);
         assertEquals(36, invoice.getId());
-        assertEquals(0, invoice.getInvoiceType());
+        assertEquals(InvoiceType.advancePayment, invoice.getInvoiceType());
         assertEquals(99.9, invoice.getAmount(), 0);
         assertEquals(6, invoice.getMonth());
         assertEquals(15, invoice.getAddress().getId());
@@ -87,7 +88,7 @@ public class InvoiceControllerIntegrationTest {
         assertEquals(3, result.size());
         Invoice invoice = result.get(0);
         assertEquals(31, invoice.getId());
-        assertEquals(0, invoice.getInvoiceType());
+        assertEquals(InvoiceType.advancePayment, invoice.getInvoiceType());
         assertEquals(20.99, invoice.getAmount(), 0);
         assertEquals(1, invoice.getMonth());
         assertEquals(11, invoice.getAddress().getId());
@@ -97,12 +98,12 @@ public class InvoiceControllerIntegrationTest {
     public void generateInvoice() throws URISyntaxException {
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.set("Content-Type", "application/json");
-        RequestEntity<String> requestEntity = new RequestEntity<>("{\"invoiceType\" : 1,\"amount\" : 79.9,\"address\" : 15,\"month\" : 6}", headers, HttpMethod.POST, new URI(API_PATH));
+        RequestEntity<String> requestEntity = new RequestEntity<>("{\"invoiceType\" : \"shopPurchase\",\"amount\" : 79.9,\"address\" : 15,\"month\" : 6}", headers, HttpMethod.POST, new URI(API_PATH));
         ResponseEntity<Invoice> responseEntity = restTemplate.postForEntity(API_PATH, requestEntity , Invoice.class);
         Invoice invoice = responseEntity.getBody();
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
         assertEquals(313, invoice.getId());
-        assertEquals(1, invoice.getInvoiceType());
+        assertEquals(InvoiceType.shopPurchase, invoice.getInvoiceType());
         assertEquals(79.9, invoice.getAmount(), 0);
         assertEquals(6, invoice.getMonth());
         assertEquals(15, invoice.getAddress().getId());

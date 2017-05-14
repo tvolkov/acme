@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.tvolkov.model.Address;
 import org.tvolkov.model.Invoice;
+import org.tvolkov.model.InvoiceType;
 import org.tvolkov.repository.AddressRepository;
 import org.tvolkov.repository.InvoiceRepository;
 
@@ -33,7 +34,7 @@ public class InvoiceServiceTest {
     @Test
     public void shouldGetInvoicesPerMonth() throws InvalidMonthException {
         //given
-        Invoice invoice = new Invoice(0, 1.0, new Address(1), 1);
+        Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, new Address(1), 1);
         when(invoiceRepository.findByCustomerIdAndMonth(1, 1))
                 .thenReturn(new ArrayList<Invoice>(){{add(invoice);}});
 
@@ -48,8 +49,8 @@ public class InvoiceServiceTest {
     @Test
     public void shouldGetInvoicePerMonthWithInvoiceTypeSpeficied() throws InvalidMonthException {
         //given
-        Invoice invoice = new Invoice(0, 1.0, new Address(1), 1);
-        when(invoiceRepository.findByCustomerIdMonthAndType(1, 1, 0))
+        Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, new Address(1), 1);
+        when(invoiceRepository.findByCustomerIdMonthAndType(1, 1, InvoiceType.advancePayment))
                 .thenReturn(new ArrayList<Invoice>(){{add(invoice);}});
 
         //when
@@ -76,7 +77,7 @@ public class InvoiceServiceTest {
     @Test
     public void shouldGetInvoicesPerAddress(){
         //given
-        Invoice invoice = new Invoice(0, 1.0, new Address(1), 1);
+        Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, new Address(1), 1);
         when(invoiceRepository.findByCustomerIdAndAddressId(1, 1))
                 .thenReturn(new ArrayList<Invoice>(){{add(invoice);}});
 
@@ -91,8 +92,8 @@ public class InvoiceServiceTest {
     @Test
     public void shouldGetFullHistoryOfInvoices(){
         //given
-        Invoice invoice1 = new Invoice(0, 1.0, new Address(1), 1);
-        Invoice invoice2 = new Invoice(0, 1.0, new Address(1), 1);
+        Invoice invoice1 = new Invoice(InvoiceType.advancePayment, 1.0, new Address(1), 1);
+        Invoice invoice2 = new Invoice(InvoiceType.advancePayment, 1.0, new Address(1), 1);
         when(invoiceRepository.findByCustomerId(1))
                 .thenReturn(new ArrayList<Invoice>(){{add(invoice1); add(invoice2);}});
 
@@ -109,7 +110,7 @@ public class InvoiceServiceTest {
     public void shouldGenerateInvoice() throws InvalidAddressIdException {
         //given
         Address address = new Address(1);
-        Invoice invoice = new Invoice(0, 1.0, address, 1);
+        Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, address, 1);
         when(addressRepository.findOne(1)).thenReturn(address);
         when(invoiceRepository.save(eq(invoice))).thenReturn(invoice);
 
@@ -119,18 +120,16 @@ public class InvoiceServiceTest {
         //then
         assertEquals(invoice, savedInvoice);
         assertEquals(address, savedInvoice.getAddress());
-
     }
 
     @Test(expected = InvalidAddressIdException.class)
     public void shouldThrowAnExceptionWhenGeneratingInvoiceIfAddressIdIsUnknown() throws InvalidAddressIdException {
         //given
         Address address = new Address(1);
-        Invoice invoice = new Invoice(0, 1.0, address, 1);
+        Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, address, 1);
         when(invoiceRepository.save(invoice)).thenReturn(invoice);
 
         //when
         Invoice savedInvoice = invoiceService.generateInvoice(invoice);
-
     }
 }

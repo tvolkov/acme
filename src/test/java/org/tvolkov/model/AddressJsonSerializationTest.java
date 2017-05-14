@@ -9,7 +9,6 @@ import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
-import java.util.HashSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @JsonTest
 public class AddressJsonSerializationTest {
 
-    private static final String EXPECTED_JSON = " {\"id\":1,\"customer\":0,\"address\":\"MyAddress\"}";
+    private static final String EXPECTED_JSON = " {\"id\":1,\"customer\":12,\"address\":\"MyAddress\"}";
 
     private JacksonTester<Address> json;
 
@@ -30,7 +29,7 @@ public class AddressJsonSerializationTest {
     @Test
     public void serializeJson() throws IOException {
         Address address = new Address(1);
-        address.setCustomer(new Customer("customer"));
+        address.setCustomer(new Customer(12, "customer"));
         address.setAddress("MyAddress");
 
         assertThat(this.json.write(address)).isStrictlyEqualToJson(EXPECTED_JSON);
