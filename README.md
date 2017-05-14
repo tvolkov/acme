@@ -11,10 +11,10 @@ Here's the data model I use:
 
 ![Diagram](model.png)
 
-The disadvantage of this approach is that you have to look up customer by foreign key in address table which is not so convenient.
+The disadvantage of this approach is that you have to look up customer by foreign key in address table which is not so convenient. 
 If I'd associate invoice with customer I should've done the same thing for address. So I've chosen that model because to me it seemed natural: Invoice is associated with address, not with customer.
 
-I intentionally haven't implement 'real' database support (it only uses in-memory H2 database) for the sake of simplicity, althouth I know that it could be done using spring's profiles.
+I intentionally haven't implement 'real' database support (it only uses in-memory H2 database) for the sake of simplicity.
 
 ###example requests:
 #### get invoices per month
