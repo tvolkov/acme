@@ -128,7 +128,7 @@ public class InvoiceControllerTest {
                 .content(INVOICE_JSON)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().string(equalTo(INVOICE_JSON)));
     }
 

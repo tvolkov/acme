@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @JsonTest
 public class CustomerJsonSerializationTest {
 
-    private static final String EXPECTED_JSON = "{\"id\" : 1,\"addresses\" : [ 12, 11, 13 ],\"name\" : \"customerName\"}";
+    private static final String EXPECTED_JSON = "{\"id\" : 1,\"addresses\" : [ 11, 12, 13 ],\"name\" : \"customerName\"}";
 
     private JacksonTester<Customer> json;
 
@@ -36,6 +36,6 @@ public class CustomerJsonSerializationTest {
             add(new Address(13));
         }});
 
-        assertThat(this.json.write(customer)).isStrictlyEqualToJson(EXPECTED_JSON);
+        assertThat(this.json.write(customer)).isEqualToJson(EXPECTED_JSON);
     }
 }

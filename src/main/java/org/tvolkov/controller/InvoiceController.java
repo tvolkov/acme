@@ -53,7 +53,7 @@ public class InvoiceController {
     @PostMapping
     public ResponseEntity<Invoice> generateInvoice(@RequestBody Invoice invoice){
         try {
-            return new ResponseEntity<>(invoiceService.generateInvoice(invoice), HttpStatus.OK);
+            return new ResponseEntity<>(invoiceService.generateInvoice(invoice), HttpStatus.CREATED);
         } catch (InvalidAddressIdException e) {
             return new ResponseEntity<>((Invoice) null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
