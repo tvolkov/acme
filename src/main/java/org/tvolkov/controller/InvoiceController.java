@@ -22,7 +22,7 @@ public class InvoiceController {
     public ResponseEntity<List<Invoice>> getAllInvoicesPerMonth(@RequestParam("customerId") int customerId,
                                                                 @RequestParam("month") int month){
         try {
-            return new ResponseEntity<>(invoiceService.getInvoicesPerMonth(customerId, month, null), HttpStatus.OK);
+            return new ResponseEntity<>(invoiceService.getInvoicesPerMonth(customerId, month, InvoiceService.NO_FILTER), HttpStatus.OK);
         } catch (InvalidMonthException e) {
             return new ResponseEntity<>((List<Invoice>) null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

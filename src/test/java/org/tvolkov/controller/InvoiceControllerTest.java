@@ -46,7 +46,7 @@ public class InvoiceControllerTest {
 
     @Test
     public void shouldReturnInvoicePerMonth() throws Exception {
-        given(invoiceService.getInvoicesPerMonth(1, 1, null))
+        given(invoiceService.getInvoicesPerMonth(1, 1, InvoiceService.NO_FILTER))
                 .willReturn(new ArrayList<Invoice>(){{add(new Invoice(0, 1.0, new Address(123), 1));}});
 
         mvc.perform(MockMvcRequestBuilders.get(API_PATH)
@@ -59,7 +59,7 @@ public class InvoiceControllerTest {
 
     @Test
     public void shouldReturnErrorIfMonthIsOutOfRangeWhenRequestingInvoicesPerMonth() throws Exception {
-        given(invoiceService.getInvoicesPerMonth(1, 1, null)).willThrow(InvalidMonthException.class);
+        given(invoiceService.getInvoicesPerMonth(1, 1, InvoiceService.NO_FILTER)).willThrow(InvalidMonthException.class);
 
         mvc.perform(MockMvcRequestBuilders.get(API_PATH)
                 .accept(MediaType.APPLICATION_JSON)
@@ -144,3 +144,4 @@ public class InvoiceControllerTest {
                 .andExpect(status().isInternalServerError());
     }
 }
+//todo add integration tests

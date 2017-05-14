@@ -24,6 +24,10 @@ public class Invoice {
 
     protected Invoice(){}
 
+    public void setId(int id){
+        this.id = id;
+    }
+
     public Invoice(int invoiceType, double amount, Address address, int month){
         this.invoiceType = invoiceType;
         this.amount = amount;
@@ -56,6 +60,10 @@ public class Invoice {
                 ", amount=" + amount +
                 ", address=" + address.getId() +
                 '}';
+    }
+
+    public int getId(){
+        return this.id;
     }
 
     public int getMonth() {

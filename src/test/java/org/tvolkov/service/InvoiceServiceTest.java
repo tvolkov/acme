@@ -38,7 +38,7 @@ public class InvoiceServiceTest {
                 .thenReturn(new ArrayList<Invoice>(){{add(invoice);}});
 
         //when
-        List<Invoice> result = invoiceService.getInvoicesPerMonth(1, 1, null);
+        List<Invoice> result = invoiceService.getInvoicesPerMonth(1, 1, InvoiceService.NO_FILTER);
 
         //then
         assertEquals(1, result.size());

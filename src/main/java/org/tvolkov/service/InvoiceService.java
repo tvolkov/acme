@@ -14,6 +14,8 @@ import java.util.List;
 @Service
 public class InvoiceService {
 
+    public static final String NO_FILTER = "all";
+
     private InvoiceRepository invoiceRepository;
     private AddressRepository addressRepository;
 
@@ -25,7 +27,7 @@ public class InvoiceService {
 
     public List<Invoice> getInvoicesPerMonth(int customerId, int month, String type) throws InvalidMonthException {
         int realMonth = getOneBasedMonth(month);
-        if (type == null){
+        if (NO_FILTER.equals(type)){
             return invoiceRepository.findByCustomerIdAndMonth(customerId, realMonth);
         }
         return invoiceRepository.findByCustomerIdMonthAndType(customerId, realMonth, InvoiceType.valueOf(type).ordinal());
