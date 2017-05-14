@@ -1,3 +1,3 @@
 # acme
 
-![Diagram](acme data model.png)
+![Diagram](model.png)
