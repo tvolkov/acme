@@ -26,14 +26,14 @@ public class InvoiceController {
 
     @GetMapping(params = {"customerId", "filter", "month"})
     public ResponseEntity<List<Invoice>> getShopInvoicesPerMonth(@RequestParam("customerId") int customerId,
-                                          @RequestParam("month") String month,
-                                          @RequestParam("filter") String filter){
+                                                                 @RequestParam("month") String month,
+                                                                 @RequestParam("filter") String filter){
             return new ResponseEntity<>(invoiceService.getInvoicesPerMonth(customerId, month, filter), HttpStatus.OK);
     }
 
     @GetMapping(params = {"customerId", "addressId"})
     public ResponseEntity<List<Invoice>> getInvoicesHistoryPerAddress(@RequestParam("customerId") int customerId,
-                                               @RequestParam("addressId") int addressId){
+                                                                      @RequestParam("addressId") int addressId){
         return new ResponseEntity<>(invoiceService.getInvoicesPerAddress(customerId, addressId), HttpStatus.OK);
     }
 
