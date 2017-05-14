@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @JsonTest
 public class InvoiceJsonSerializationTest {
 
-    private static final String EXPECTED_JSON = "{\"invoiceType\" : 0,\"amount\" : 20.99,\"month\" : 1,\"address\" : 11}";
+    private static final String EXPECTED_JSON = "{\"id\": 234, \"invoiceType\" : 0,\"amount\" : 20.99,\"month\" : 1,\"address\" : 11}";
 
     private JacksonTester<Invoice> json;
 
