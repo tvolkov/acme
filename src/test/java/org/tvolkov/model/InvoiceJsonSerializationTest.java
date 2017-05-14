@@ -30,6 +30,6 @@ public class InvoiceJsonSerializationTest {
     public void serializeJson() throws IOException {
         Invoice invoice = new Invoice(0, 20.99, new Address(11), 1);
         invoice.setId(234);
-        assertThat(this.json.write(invoice)).isEqualToJson(EXPECTED_JSON);
+        assertThat(this.json.write(invoice)).isStrictlyEqualToJson(EXPECTED_JSON);
     }
 }

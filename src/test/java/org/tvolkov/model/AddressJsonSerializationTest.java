@@ -33,6 +33,6 @@ public class AddressJsonSerializationTest {
         address.setCustomer(new Customer("customer"));
         address.setAddress("MyAddress");
 
-        assertThat(this.json.write(address)).isEqualToJson(EXPECTED_JSON);
+        assertThat(this.json.write(address)).isStrictlyEqualToJson(EXPECTED_JSON);
     }
 }

@@ -35,7 +35,7 @@ public class InvoiceControllerTest {
     private static final String MONTH_PARAM = "month";
     private static final String FILTER_PARAM = "filter";
     private static final String ADDRESS_ID_PARAM = "addressId";
-    private static final String INVOICE_JSON = "{\"invoiceType\":0,\"amount\":1.0,\"month\":1,\"address\":123}";
+    private static final String INVOICE_JSON = "{\"id\":0,\"invoiceType\":0,\"amount\":1.0,\"month\":1,\"address\":123}";
     private static final String INVOICE_JSON_ARRAY = "[" + INVOICE_JSON + "]";
 
     @Autowired

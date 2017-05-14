@@ -36,6 +36,6 @@ public class CustomerJsonSerializationTest {
             add(new Address(13));
         }});
 
-        assertThat(this.json.write(customer)).isEqualToJson(EXPECTED_JSON);
+        assertThat(this.json.write(customer)).isStrictlyEqualToJson(EXPECTED_JSON);
     }
 }
