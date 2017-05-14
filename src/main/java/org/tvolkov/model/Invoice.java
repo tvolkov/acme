@@ -1,7 +1,14 @@
 package org.tvolkov.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import javax.persistence.*;
+import java.time.YearMonth;
 
 @Entity
 public class Invoice {
@@ -21,7 +28,9 @@ public class Invoice {
     @JsonIdentityReference(alwaysAsId = true)
     private Address address;
 
-    private int month;
+    @Convert(converter = MonthConverter.class)
+    @JsonSerialize(using = ToStringSerializer.class)
+    private YearMonth month;
 
     protected Invoice(){}
 
@@ -29,7 +38,7 @@ public class Invoice {
         this.id = id;
     }
 
-    public Invoice(InvoiceType invoiceType, double amount, Address address, int month){
+    public Invoice(InvoiceType invoiceType, Double amount, Address address, YearMonth month){
         this.invoiceType = invoiceType;
         this.amount = amount;
         this.address = address;
@@ -67,11 +76,11 @@ public class Invoice {
         return this.id == null ? 0 : this.id;
     }
 
-    public int getMonth() {
+    public YearMonth getMonth() {
         return month;
     }
 
-    public void setMonth(int month) {
+    public void setMonth(YearMonth month) {
         this.month = month;
     }
 

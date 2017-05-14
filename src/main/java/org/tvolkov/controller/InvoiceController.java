@@ -6,9 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.tvolkov.model.Invoice;
 import org.tvolkov.service.InvalidAddressIdException;
-import org.tvolkov.service.InvalidMonthException;
 import org.tvolkov.service.InvoiceService;
 
+import java.time.DateTimeException;
 import java.util.List;
 
 @RestController
@@ -20,23 +20,15 @@ public class InvoiceController {
 
     @GetMapping(params = {"customerId", "month"})
     public ResponseEntity<List<Invoice>> getAllInvoicesPerMonth(@RequestParam("customerId") int customerId,
-                                                                @RequestParam("month") int month){
-        try {
+                                                                @RequestParam("month") String month){
             return new ResponseEntity<>(invoiceService.getInvoicesPerMonth(customerId, month, InvoiceService.NO_FILTER), HttpStatus.OK);
-        } catch (InvalidMonthException e) {
-            return new ResponseEntity<>((List<Invoice>) null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
     @GetMapping(params = {"customerId", "filter", "month"})
     public ResponseEntity<List<Invoice>> getShopInvoicesPerMonth(@RequestParam("customerId") int customerId,
-                                          @RequestParam("month") int month,
+                                          @RequestParam("month") String month,
                                           @RequestParam("filter") String filter){
-        try {
             return new ResponseEntity<>(invoiceService.getInvoicesPerMonth(customerId, month, filter), HttpStatus.OK);
-        } catch (InvalidMonthException e) {
-            return new ResponseEntity<>((List<Invoice>) null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
     @GetMapping(params = {"customerId", "addressId"})
@@ -55,7 +47,12 @@ public class InvoiceController {
         try {
             return new ResponseEntity<>(invoiceService.generateInvoice(invoice), HttpStatus.CREATED);
         } catch (InvalidAddressIdException e) {
-            return new ResponseEntity<>((Invoice) null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>((Invoice) null, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @ExceptionHandler(DateTimeException.class)
+    public ResponseEntity<Invoice> handleDateTimeException(DateTimeException dateTimeException){
+        return new ResponseEntity<>((Invoice)null, HttpStatus.BAD_REQUEST);
     }
 }

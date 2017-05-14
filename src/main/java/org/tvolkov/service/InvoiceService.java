@@ -8,7 +8,7 @@ import org.tvolkov.model.InvoiceType;
 import org.tvolkov.repository.AddressRepository;
 import org.tvolkov.repository.InvoiceRepository;
 
-import java.time.Month;
+import java.time.YearMonth;
 import java.util.List;
 
 @Service
@@ -25,12 +25,12 @@ public class InvoiceService {
         this.addressRepository = addressRepository;
     }
 
-    public List<Invoice> getInvoicesPerMonth(int customerId, int month, String type) throws InvalidMonthException {
-        int realMonth = getOneBasedMonth(month);
+    public List<Invoice> getInvoicesPerMonth(int customerId, String intYearMonth, String type) {
+        YearMonth yearMonth = YearMonth.parse(intYearMonth);
         if (NO_FILTER.equals(type)){
-            return invoiceRepository.findByCustomerIdAndMonth(customerId, realMonth);
+            return invoiceRepository.findByCustomerIdAndMonth(customerId, yearMonth);
         }
-        return invoiceRepository.findByCustomerIdMonthAndType(customerId, realMonth, InvoiceType.valueOf(type));
+        return invoiceRepository.findByCustomerIdMonthAndType(customerId, yearMonth, InvoiceType.valueOf(type));
     }
 
     public List<Invoice> getInvoicesPerAddress(int customerId, int addressId){
@@ -48,12 +48,5 @@ public class InvoiceService {
             throw new InvalidAddressIdException("No Address with id " + addressId + " exists");
         }
         return invoiceRepository.save(new Invoice(invoice.getInvoiceType(), invoice.getAmount(), address, invoice.getMonth()));
-    }
-
-    private int getOneBasedMonth(int month) throws InvalidMonthException {
-        if (month < 1 || month > 12){
-            throw new InvalidMonthException("month is out of range");
-        }
-        return Month.of(month).ordinal() + 1; // +1 needed because Month's ordinals are zero-based but we are using one-based months notation
     }
 }

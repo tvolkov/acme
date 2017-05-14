@@ -11,6 +11,9 @@ import org.tvolkov.model.InvoiceType;
 import org.tvolkov.repository.AddressRepository;
 import org.tvolkov.repository.InvoiceRepository;
 
+import java.time.Month;
+import java.time.YearMonth;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +37,12 @@ public class InvoiceServiceTest {
     @Test
     public void shouldGetInvoicesPerMonth() throws InvalidMonthException {
         //given
-        Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, new Address(1), 1);
-        when(invoiceRepository.findByCustomerIdAndMonth(1, 1))
+        Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, new Address(1), YearMonth.of(2017, 1));
+        when(invoiceRepository.findByCustomerIdAndMonth(1, YearMonth.of(2017, 1)))
                 .thenReturn(new ArrayList<Invoice>(){{add(invoice);}});
 
         //when
-        List<Invoice> result = invoiceService.getInvoicesPerMonth(1, 1, InvoiceService.NO_FILTER);
+        List<Invoice> result = invoiceService.getInvoicesPerMonth(1, "2017-01", InvoiceService.NO_FILTER);
 
         //then
         assertEquals(1, result.size());
@@ -49,12 +52,12 @@ public class InvoiceServiceTest {
     @Test
     public void shouldGetInvoicePerMonthWithInvoiceTypeSpeficied() throws InvalidMonthException {
         //given
-        Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, new Address(1), 1);
-        when(invoiceRepository.findByCustomerIdMonthAndType(1, 1, InvoiceType.advancePayment))
+        Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, new Address(1), YearMonth.of(2017, 1));
+        when(invoiceRepository.findByCustomerIdMonthAndType(1, YearMonth.of(2017, 1), InvoiceType.advancePayment))
                 .thenReturn(new ArrayList<Invoice>(){{add(invoice);}});
 
         //when
-        List<Invoice> result = invoiceService.getInvoicesPerMonth(1, 1, "advancePayment");
+        List<Invoice> result = invoiceService.getInvoicesPerMonth(1, "2017-01", "advancePayment");
 
         //then
         assertEquals(1, result.size());
@@ -62,22 +65,22 @@ public class InvoiceServiceTest {
 
     }
 
-    @Test(expected = InvalidMonthException.class)
+    @Test(expected = DateTimeParseException.class)
     public void shouldThrowAnExceptionWhenGettingInvoicePerMonthIfMonthIsOutOfRange() throws InvalidMonthException {
         //when
-        invoiceService.getInvoicesPerMonth(1, 13, null);
+        invoiceService.getInvoicesPerMonth(1, "qwe", null);
     }
 
-    @Test(expected = InvalidMonthException.class)
+    @Test(expected = DateTimeParseException.class)
     public void shouldThrowAnExceptionWhenGettingInvoicePerMonthWithTypeIfMonthIsOutOfRange() throws InvalidMonthException {
         //when
-        invoiceService.getInvoicesPerMonth(1, 13, "advancePayment");
+        invoiceService.getInvoicesPerMonth(1, "qwe", "advancePayment");
     }
 
     @Test
     public void shouldGetInvoicesPerAddress(){
         //given
-        Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, new Address(1), 1);
+        Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, new Address(1), YearMonth.of(2017, 1));
         when(invoiceRepository.findByCustomerIdAndAddressId(1, 1))
                 .thenReturn(new ArrayList<Invoice>(){{add(invoice);}});
 
@@ -92,8 +95,8 @@ public class InvoiceServiceTest {
     @Test
     public void shouldGetFullHistoryOfInvoices(){
         //given
-        Invoice invoice1 = new Invoice(InvoiceType.advancePayment, 1.0, new Address(1), 1);
-        Invoice invoice2 = new Invoice(InvoiceType.advancePayment, 1.0, new Address(1), 1);
+        Invoice invoice1 = new Invoice(InvoiceType.advancePayment, 1.0, new Address(1), YearMonth.of(2017, 1));
+        Invoice invoice2 = new Invoice(InvoiceType.advancePayment, 1.0, new Address(1), YearMonth.of(2017, 1));
         when(invoiceRepository.findByCustomerId(1))
                 .thenReturn(new ArrayList<Invoice>(){{add(invoice1); add(invoice2);}});
 
@@ -110,7 +113,7 @@ public class InvoiceServiceTest {
     public void shouldGenerateInvoice() throws InvalidAddressIdException {
         //given
         Address address = new Address(1);
-        Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, address, 1);
+        Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, address, YearMonth.of(2017, 1));
         when(addressRepository.findOne(1)).thenReturn(address);
         when(invoiceRepository.save(eq(invoice))).thenReturn(invoice);
 
@@ -126,7 +129,7 @@ public class InvoiceServiceTest {
     public void shouldThrowAnExceptionWhenGeneratingInvoiceIfAddressIdIsUnknown() throws InvalidAddressIdException {
         //given
         Address address = new Address(1);
-        Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, address, 1);
+        Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, address, YearMonth.of(2017, 1));
         when(invoiceRepository.save(invoice)).thenReturn(invoice);
 
         //when
