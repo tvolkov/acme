@@ -11,7 +11,6 @@ import org.tvolkov.model.InvoiceType;
 import org.tvolkov.repository.AddressRepository;
 import org.tvolkov.repository.InvoiceRepository;
 
-import java.time.Month;
 import java.time.YearMonth;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class InvoiceServiceTest {
     private AddressRepository addressRepository;
 
     @Test
-    public void shouldGetInvoicesPerMonth() throws InvalidMonthException {
+    public void shouldGetInvoicesPerMonth() {
         //given
         Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, new Address(1), YearMonth.of(2017, 1));
         when(invoiceRepository.findByCustomerIdAndMonth(1, YearMonth.of(2017, 1)))
@@ -50,7 +49,7 @@ public class InvoiceServiceTest {
     }
 
     @Test
-    public void shouldGetInvoicePerMonthWithInvoiceTypeSpeficied() throws InvalidMonthException {
+    public void shouldGetInvoicePerMonthWithInvoiceTypeSpeficied() {
         //given
         Invoice invoice = new Invoice(InvoiceType.advancePayment, 1.0, new Address(1), YearMonth.of(2017, 1));
         when(invoiceRepository.findByCustomerIdMonthAndType(1, YearMonth.of(2017, 1), InvoiceType.advancePayment))
@@ -66,13 +65,13 @@ public class InvoiceServiceTest {
     }
 
     @Test(expected = DateTimeParseException.class)
-    public void shouldThrowAnExceptionWhenGettingInvoicePerMonthIfMonthIsOutOfRange() throws InvalidMonthException {
+    public void shouldThrowAnExceptionWhenGettingInvoicePerMonthIfMonthIsOutOfRange() {
         //when
         invoiceService.getInvoicesPerMonth(1, "qwe", null);
     }
 
     @Test(expected = DateTimeParseException.class)
-    public void shouldThrowAnExceptionWhenGettingInvoicePerMonthWithTypeIfMonthIsOutOfRange() throws InvalidMonthException {
+    public void shouldThrowAnExceptionWhenGettingInvoicePerMonthWithTypeIfMonthIsOutOfRange() {
         //when
         invoiceService.getInvoicesPerMonth(1, "qwe", "advancePayment");
     }

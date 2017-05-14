@@ -9,7 +9,6 @@ import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
-import java.time.Month;
 import java.time.YearMonth;
 
 import static org.assertj.core.api.Assertions.assertThat;

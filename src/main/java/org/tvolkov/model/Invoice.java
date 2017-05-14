@@ -62,16 +62,6 @@ public class Invoice {
         this.address = address;
     }
 
-    @Override
-    public String toString() {
-        return "Invoice{" +
-                "invoiceId='" + id + '\'' +
-                ", invoiceType=" + invoiceType +
-                ", amount=" + amount +
-                ", address=" + address.getId() +
-                '}';
-    }
-
     public int getId(){
         return this.id == null ? 0 : this.id;
     }
@@ -112,5 +102,15 @@ public class Invoice {
         if (Double.compare(invoice.amount, amount) != 0) return false;
         if (month != invoice.month) return false;
         return address.equals(invoice.address);
+    }
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "invoiceId='" + id + '\'' +
+                ", invoiceType=" + invoiceType +
+                ", amount=" + amount +
+                ", address=" + address.getId() +
+                '}';
     }
 }
